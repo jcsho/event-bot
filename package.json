@@ -1,0 +1,44 @@
+{
+  "name": "event-bot",
+  "version": "1.0.0",
+  "description": "Discord Bot for Managing Events",
+  "main": "src/main.ts",
+  "scripts": {
+    "lint": "prettier --write \"{src,test}/**/*.ts\"",
+    "dev": "ts-node-dev src/main.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justinhodev/event-bot.git"
+  },
+  "keywords": [
+    "typescript",
+    "discordjs"
+  ],
+  "author": "Justin Ho <justinhodev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justinhodev/event-bot/issues"
+  },
+  "homepage": "https://github.com/justinhodev/event-bot#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.7",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "ts-node-dev": "^1.0.0-pre.39",
+    "tslint": "^5.17.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "pg": "^7.11.0",
+    "typeorm": "^0.2.18",
+    "winston": "^3.2.1"
+  }
+}
