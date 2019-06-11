@@ -12,11 +12,6 @@
       "es2017",
       "es2018"
     ],
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/discord.js/typings",
-      "node_modules/winston"
-    ],
 
     // typeorm settings
     // see https://typeorm.io/#/
@@ -24,5 +19,5 @@
     "experimentalDecorators": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "test"]
+  "exclude": ["node_modules", "test", "dist"]
 }
