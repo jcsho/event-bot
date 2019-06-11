@@ -1,5 +1,17 @@
-export function sayHello(name: string): string {
-  return `Hello, ${name}!`;
-}
+import { Client } from 'discord.js';
 
-console.log(sayHello("world"));
+// Create new client
+const client = new Client();
+
+// Log to console when ready
+client.once('ready', () => {
+  console.log('Ready!');
+});
+
+// Login to discord
+client.login(/* Insert Bot Token */);
+
+// Listen for a message
+client.on('message', (message) => {
+  console.log(message.content);
+});
