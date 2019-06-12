@@ -33,3 +33,6 @@ dist
 
 # VSCode Configurations
 .vscode
+
+# Dotenv variables
+.env

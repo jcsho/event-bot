@@ -8,7 +8,7 @@
 		"lint:fix": "prettier --write \"{src,test}/**/*.ts\"",
 		"dev": "ts-node-dev src/main.ts",
 		"build": "tsc",
-		"start": "node ./dist/main.js",
+		"start": "node -r dotenv/config ./dist/main.js",
 		"test": "jest"
 	},
 	"repository": {
@@ -23,8 +23,10 @@
 	},
 	"homepage": "https://github.com/justinhodev/event-bot#readme",
 	"devDependencies": {
+		"@types/dotenv": "^6.1.1",
 		"@types/jest": "^24.0.13",
 		"@types/node": "^12.0.7",
+		"dotenv": "^8.0.0",
 		"jest": "^24.8.0",
 		"prettier": "^1.18.2",
 		"ts-jest": "^24.0.2",

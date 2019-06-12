@@ -1,4 +1,5 @@
 import { Client } from 'discord.js';
+import { botToken } from './config';
 
 // Create new client
 const client = new Client();
@@ -9,7 +10,7 @@ client.once('ready', () => {
 });
 
 // Login to discord
-client.login(/* Insert Bot Token */);
+client.login(botToken);
 
 // Listen for a message
 client.on('message', (message) => {
