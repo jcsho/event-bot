@@ -8,3 +8,6 @@ if (result.error) {
 
 /** Discord Bot Token */
 export const botToken = process.env.BOT_TOKEN;
+
+/** Bot Activation Prefix */
+export const prefix = '$';
