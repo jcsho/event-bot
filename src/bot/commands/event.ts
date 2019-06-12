@@ -1,8 +1,8 @@
-import { Message } from "discord.js";
+import { Message } from 'discord.js';
 
 export const event = {
-  name: "event",
-  description: "event [option]",
+  name: 'event',
+  description: 'event [option]',
   execute(message: Message, args: string[]) {
     message.channel.send(`The message received was ${message}`);
     if (args.length) {

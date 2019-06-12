@@ -1,9 +1,11 @@
-import { Client, ClientOptions, Collection } from "discord.js";
+import { Client, ClientOptions, Collection } from 'discord.js';
 import { event } from './commands/event';
 import { prefix } from '../config';
 
+/**
+ * Discord Bot that manages events through text channel
+ */
 export class EventBot extends Client {
-
   private commands: any;
   private prefix: string;
 
@@ -25,7 +27,7 @@ export class EventBot extends Client {
    */
   connect(): Promise<string> {
     if (!this.token) {
-      throw "Token is not set";
+      throw 'Token is not set';
     }
     // try logging in
     return this.login(this.token);
@@ -35,8 +37,9 @@ export class EventBot extends Client {
    * Main runtime function, handles all commands and operations
    */
   run(): void {
-    this.on("message", (message) => {
-      if (!message.content.startsWith(this.prefix) || message.author.bot) return;
+    this.on('message', message => {
+      if (!message.content.startsWith(this.prefix) || message.author.bot)
+        return;
 
       const args = message.content.slice(prefix.length).split(/ +/);
       const command = args.shift()!.toLowerCase();
