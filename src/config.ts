@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 
 const result = dotenv.config();
 
@@ -10,4 +10,4 @@ if (result.error) {
 export const botToken = process.env.BOT_TOKEN;
 
 /** Bot Activation Prefix */
-export const prefix = '$';
+export const prefix = "$";
