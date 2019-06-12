@@ -5,8 +5,9 @@ const bot = new EventBot(botToken);
 
 bot
   .connect()
-  .then(message => {
-    console.log('Connected to Discord');
-    bot.run();
+  .then(() => {
+    bot.on('message', message => {
+      console.log(message.content);
+    });
   })
   .catch(err => console.log(err));
