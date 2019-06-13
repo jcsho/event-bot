@@ -1,5 +1,4 @@
 import { Command } from './command';
-import { Message } from 'discord.js';
 
 /**
  * Event interactions
@@ -10,9 +9,18 @@ export const event: Command = {
   args: true,
   usage: '[action] [options]',
   cooldown: 5,
-  execute(message: Message, args: string[]) {
-    if (args[0] === 'create') {
-      message.channel.send('You tried creating an event');
+  execute(message, args) {
+    switch (args[0]) {
+      case 'create':
+        return message.channel.send('Creating event');
+      case 'find':
+        return message.channel.send('Finding event');
+      case 'list':
+        return message.channel.send('Listing all events');
+      case 'delete':
+        return message.channel.send('Deleting event');
+      default:
+        return message.channel.send('Unknown action');
     }
   }
 };

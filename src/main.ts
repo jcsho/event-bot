@@ -1,5 +1,5 @@
 import { botToken } from './config';
-import { EventBot } from './bot';
+import { EventBot } from './bot/EventBot';
 
 const bot = new EventBot(botToken);
 
@@ -11,4 +11,4 @@ bot
     //   console.log(message.content);
     // });
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
