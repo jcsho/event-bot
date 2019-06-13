@@ -1,15 +1,18 @@
+import { Command } from './command';
 import { Message } from 'discord.js';
 
-export const event = {
+/**
+ * Event interactions
+ */
+export const event: Command = {
   name: 'event',
-  description: 'event [option]',
+  description: 'Manage events',
+  args: true,
+  usage: '[action] [options]',
+  cooldown: 5,
   execute(message: Message, args: string[]) {
-    message.channel.send(`The message received was ${message}`);
-    if (args.length) {
-      message.channel.send(`Extra arguments:`);
-      args.forEach(element => {
-        message.channel.send(element);
-      });
+    if (args[0] === 'create') {
+      message.channel.send('You tried creating an event');
     }
   }
 };

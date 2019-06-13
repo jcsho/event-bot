@@ -1,4 +1,5 @@
 import { Client, ClientOptions, Collection } from 'discord.js';
+import { Command } from './commands/command';
 import { event } from './commands/event';
 import { prefix } from '../config';
 
@@ -6,7 +7,8 @@ import { prefix } from '../config';
  * Discord Bot that manages events through text channel
  */
 export class EventBot extends Client {
-  private commands: any;
+  private commands: Collection<string, Command>;
+  private cooldowns: Collection<string, Collection<string, number>>;
   private prefix: string;
 
   /**
@@ -18,6 +20,8 @@ export class EventBot extends Client {
     super(options);
     if (token !== undefined) this.token = token;
     this.prefix = prefix;
+    this.commands = new Collection();
+    this.cooldowns = new Collection();
     this.setup();
   }
 
@@ -32,7 +36,7 @@ export class EventBot extends Client {
 
     // Add commands from the ./commands folder (currently only event command)
     // TODO (justin) change to dynamically loading in files
-    this.commands = new Collection().set(event.name, event);
+    this.commands.set(event.name, event);
 
     // Log all connections
     this.on('ready', () => {
@@ -53,16 +57,69 @@ export class EventBot extends Client {
       const args = message.content.slice(prefix.length).split(/ +/);
       // Take first word without prefix
       // args[0] is now the second word in the string
-      const command = args.shift()!.toLowerCase();
+      const commandName = args.shift()!.toLowerCase();
+
+      if (!this.commands.has(commandName)) {
+        return;
+      }
+
+      const command: Command = this.commands.get(commandName)!;
+
+      if (command.args && !args.length) {
+        let reply = `No arguments provided for command ${commandName}`;
+
+        if (command.usage) {
+          reply += `\nExample: \`${prefix} ${command.name} ${command.usage}\``;
+        }
+
+        return message.channel.send(reply);
+      }
+
+      if (!this.cooldowns.has(command.name)) {
+        this.cooldowns.set(command.name, new Collection());
+      }
+
+      const cd = this.cooldown(command, message.author.id);
+      if (cd !== 0) {
+        return message.channel.send(`Cooldown: ${cd} seconds`);
+      }
 
       try {
-        this.commands.get(command).execute(message, args);
+        command.execute(message, args);
       } catch (err) {
         // TODO (justin) change to custom logger transport
         console.error(err);
-        message.channel.send(`Error executing the command ${message}`);
       }
     });
+  }
+
+  /**
+   * Add delay for each command
+   * @param command - the command to run
+   * @param userId - user running the command
+   */
+  private cooldown(command: Command, userId: string): number {
+    if (!this.cooldowns.has(command.name)) {
+      this.cooldowns.set(command.name, new Collection());
+    }
+
+    const now = Date.now();
+    const timestamps: Collection<string, number> = this.cooldowns.get(command.name)!;
+    const cooldownAmount = (command.cooldown) * 1000;
+
+    if (timestamps.has(userId)) {
+      const expirationTime = timestamps.get(userId)! + cooldownAmount;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return timeLeft;
+      }
+    }
+
+    timestamps.set(userId, now);
+    this.setTimeout(() => timestamps.delete(userId), cooldownAmount);
+
+    return 0;
   }
 
   /**

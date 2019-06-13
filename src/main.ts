@@ -6,8 +6,9 @@ const bot = new EventBot(botToken);
 bot
   .connect()
   .then(() => {
-    bot.on('message', message => {
-      console.log(message.content);
-    });
+    // * for debugging
+    // bot.on('message', message => {
+    //   console.log(message.content);
+    // });
   })
   .catch(err => console.log(err));
